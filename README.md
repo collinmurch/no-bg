@@ -39,6 +39,37 @@ docker run -p 5000:5000 bg-remover
 
 ### Local Development
 
+#### Using Makefile (Recommended)
+
+1. Clone the repository
+2. Set up the development environment:
+
+```bash
+make setup
+```
+
+3. Run the application:
+
+```bash
+make run
+```
+
+4. Access the application at http://localhost:5000
+
+5. Other available commands:
+
+```bash
+make lint      # Run linting checks
+make format    # Format code using ruff
+make test      # Run tests
+make clean     # Clean up temporary files
+make run-docker # Build and run with Docker
+```
+
+Run `make help` to see all available commands.
+
+#### Manual Setup
+
 1. Clone the repository
 2. Create and activate a virtual environment:
 

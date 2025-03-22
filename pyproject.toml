@@ -2,8 +2,10 @@
 line-length = 88
 target-version = "py311"
 
-# Enable Pyflakes and pycodestyle
+# Enable Pyflakes, pycodestyle, and formatter
 select = ["E", "F"]
+fix = true
+format = true
 
 # Exclude a variety of commonly ignored directories.
 exclude = [
