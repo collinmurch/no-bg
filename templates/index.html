@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Remover</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Background Remover</h1>
+            <p>Upload an image and remove its background instantly</p>
+        </header>
+        
+        <main>
+            <div class="upload-section">
+                <form id="upload-form" enctype="multipart/form-data">
+                    <div class="file-input-container">
+                        <label for="file-input" class="file-input-label">
+                            <span id="file-input-text">Choose an image</span>
+                        </label>
+                        <input type="file" id="file-input" name="file" accept=".png,.jpg,.jpeg" hidden>
+                    </div>
+                    <button type="submit" id="submit-btn" disabled>Remove Background</button>
+                </form>
+            </div>
+            
+            <div class="results-section" id="results-section" style="display: none;">
+                <div class="comparison">
+                    <div class="image-container">
+                        <h3>Original Image</h3>
+                        <div class="image-wrapper">
+                            <img id="original-image" src="" alt="Original image">
+                        </div>
+                    </div>
+                    <div class="image-container">
+                        <h3>Background Removed</h3>
+                        <div class="image-wrapper">
+                            <img id="processed-image" src="" alt="Processed image">
+                        </div>
+                    </div>
+                </div>
+                <div class="download-section">
+                    <a id="download-btn" href="" download class="download-button">Download Result</a>
+                    <button id="try-again-btn" class="try-again-button">Try Another Image</button>
+                </div>
+            </div>
+            
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+                <p>Processing your image...</p>
+            </div>
+        </main>
+    </div>
+    
+    <script src="/static/script.js"></script>
+</body>
+</html>
