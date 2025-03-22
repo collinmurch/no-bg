@@ -1,21 +1,23 @@
-.PHONY: setup run run-docker lint format test clean
+.PHONY: setup run run-docker lint format test clean docker-clean help
 
 # Variables
-VENV_DIR = venv
-PYTHON = python
+VENV_DIR = .venv
 DOCKER_IMAGE = bg-remover
-PORT = 5000
+PORT = 8080
 
-# Setup development environment
+# Setup development environment with uv
 setup:
-	$(PYTHON) -m venv $(VENV_DIR)
-	$(VENV_DIR)/bin/pip install uv
-	$(VENV_DIR)/bin/uv pip install -r requirements.txt
-	$(VENV_DIR)/bin/uv pip install ruff pytest
+	@echo "Setting up environment using uv..."
+	uv venv
+	@echo "Installing dependencies..."
+	uv pip install -r requirements.txt
+	@echo "Installing development dependencies..."
+	uv pip install ruff pytest
+	@echo "Setup complete!"
 
 # Run the application (local)
 run:
-	$(VENV_DIR)/bin/python app.py
+	uv run app.py
 
 # Run the application (Docker)
 run-docker:
@@ -24,15 +26,15 @@ run-docker:
 
 # Run linting
 lint:
-	$(VENV_DIR)/bin/ruff check .
+	uv run ruff check .
 
 # Run formatting
 format:
-	$(VENV_DIR)/bin/ruff format .
+	uv run ruff format .
 
 # Run tests
 test:
-	$(VENV_DIR)/bin/pytest
+	uv run pytest
 
 # Clean up
 clean:
@@ -41,13 +43,19 @@ clean:
 	find . -type d -name *.egg-info -exec rm -rf {} +
 	find . -type f -name *.pyc -delete
 
+# Docker clean up
+docker-clean:
+	docker rmi $(DOCKER_IMAGE) || true
+	docker image prune -f
+
 # Help
 help:
 	@echo "Available commands:"
-	@echo "  make setup         - Set up development environment"
+	@echo "  make setup         - Set up development environment using uv"
 	@echo "  make run           - Run the application locally"
 	@echo "  make run-docker    - Build and run the application using Docker"
 	@echo "  make lint          - Run linting checks"
 	@echo "  make format        - Format code"
 	@echo "  make test          - Run tests"
 	@echo "  make clean         - Clean up temporary files"
+	@echo "  make docker-clean  - Clean up Docker images"

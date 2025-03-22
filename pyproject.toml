@@ -1,13 +1,29 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "no-bg"
+version = "0.1.0"
+description = "Background removal web app using rembg"
+requires-python = ">=3.8"
+dependencies = [
+    "flask",
+    "rembg",
+]
+
+[tool.setuptools]
+py-modules = ["app"]
+
+[tool.setuptools.exclude-package-data]
+"*" = ["static/*", "templates/*"]
+
 [tool.ruff]
 line-length = 88
-target-version = "py311"
-
-# Enable Pyflakes, pycodestyle, and formatter
-select = ["E", "F"]
+target-version = "py312"
 fix = true
-format = true
 
-# Exclude a variety of commonly ignored directories.
+# Exclude a variety of commonly ignored directories
 exclude = [
     ".bzr",
     ".direnv",
@@ -32,12 +48,21 @@ exclude = [
     "venv",
 ]
 
-# Allow unused variables when underscore-prefixed.
+[tool.ruff.lint]
+# Enable Pyflakes, pycodestyle, isort, and more
+select = ["E", "F", "I", "W", "B", "C4", "UP"]
+
+# Allow unused variables when underscore-prefixed
 dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
-# Assume Python 3.11
-target-version = "py311"
-
-[tool.ruff.mccabe]
-# Flag high complexity functions for scrutiny, but don't fail.  The default is 10.
+[tool.ruff.lint.mccabe]
+# Flag high complexity functions for scrutiny
 max-complexity = 15
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"

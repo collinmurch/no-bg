@@ -59,16 +59,52 @@ make run
 5. Other available commands:
 
 ```bash
-make lint      # Run linting checks
-make format    # Format code using ruff
-make test      # Run tests
-make clean     # Clean up temporary files
+make setup-uv   # Alternative setup using uv directly
+make lint       # Run linting checks
+make format     # Format code using ruff
+make test       # Run tests
+make clean      # Clean up temporary files
 make run-docker # Build and run with Docker
+make help       # Display all available commands
 ```
 
-Run `make help` to see all available commands.
+#### Using uv for Virtual Environment (Alternative)
 
-#### Manual Setup
+[uv](https://github.com/astral-sh/uv) is a fast Python package installer and resolver that can also create virtual environments.
+
+1. Clone the repository
+2. Install uv if you don't have it already:
+
+```bash
+pip install uv
+```
+
+3. Create a virtual environment and install dependencies in one step:
+
+```bash
+uv venv
+uv pip install -r requirements.txt
+```
+
+4. Activate the virtual environment:
+
+```bash
+# On Unix/macOS
+source .venv/bin/activate
+
+# On Windows
+.venv\Scripts\activate
+```
+
+5. Run the application:
+
+```bash
+python app.py
+```
+
+6. Access the application at http://localhost:5000
+
+#### Manual Setup (Traditional venv)
 
 1. Clone the repository
 2. Create and activate a virtual environment:

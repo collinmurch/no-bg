@@ -1,5 +1,7 @@
 import os
+
 import pytest
+
 from app import app as flask_app
 
 
@@ -9,11 +11,11 @@ def app():
     # Create test folders
     os.makedirs(flask_app.config['UPLOAD_FOLDER'], exist_ok=True)
     os.makedirs(flask_app.config['PROCESSED_FOLDER'], exist_ok=True)
-    
+
     # Disable debug mode for testing
     flask_app.config['TESTING'] = True
     flask_app.config['DEBUG'] = False
-    
+
     yield flask_app
 
 
