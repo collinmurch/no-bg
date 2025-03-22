@@ -9,31 +9,73 @@ document.addEventListener('DOMContentLoaded', function() {
     const downloadBtn = document.getElementById('download-btn');
     const tryAgainBtn = document.getElementById('try-again-btn');
     const loadingElement = document.getElementById('loading');
+    const dropArea = document.getElementById('drop-area');
+
+    // Handle drag and drop events
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, highlight, false);
+    });
+
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, unhighlight, false);
+    });
+
+    function highlight() {
+        dropArea.querySelector('.file-input-label').classList.add('highlight');
+    }
+
+    function unhighlight() {
+        dropArea.querySelector('.file-input-label').classList.remove('highlight');
+    }
+
+    dropArea.addEventListener('drop', handleDrop, false);
+
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            handleFiles(files[0]);
+        }
+    }
+
+    function handleFiles(file) {
+        // Check if file is an image
+        if (!file.type.match('image/(jpeg|jpg|png)')) {
+            alert('Please select a valid image file (JPG, JPEG, or PNG)');
+            fileInput.value = '';
+            fileInputText.textContent = 'Choose an image or drag and drop';
+            submitBtn.disabled = true;
+            return;
+        }
+        
+        fileInputText.textContent = file.name;
+        submitBtn.disabled = false;
+        
+        // Show original image preview
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            originalImage.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
 
     // Handle file selection
     fileInput.addEventListener('change', function() {
         if (fileInput.files.length > 0) {
             const file = fileInput.files[0];
-            // Check if file is an image
-            if (!file.type.match('image/(jpeg|jpg|png)')) {
-                alert('Please select a valid image file (JPG, JPEG, or PNG)');
-                fileInput.value = '';
-                fileInputText.textContent = 'Choose an image';
-                submitBtn.disabled = true;
-                return;
-            }
-            
-            fileInputText.textContent = file.name;
-            submitBtn.disabled = false;
-            
-            // Show original image preview
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                originalImage.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
+            handleFiles(file);
         } else {
-            fileInputText.textContent = 'Choose an image';
+            fileInputText.textContent = 'Choose an image or drag and drop';
             submitBtn.disabled = true;
         }
     });
@@ -88,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
     tryAgainBtn.addEventListener('click', function() {
         resultsSection.style.display = 'none';
         fileInput.value = '';
-        fileInputText.textContent = 'Choose an image';
+        fileInputText.textContent = 'Choose an image or drag and drop';
         submitBtn.disabled = true;
     });
 });
