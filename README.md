@@ -13,7 +13,7 @@ A simple web application that removes backgrounds from images using the rembg Py
 
 - Backend: Flask (Python)
 - Frontend: HTML, CSS, JavaScript
-- Image Processing: rembg, Pillow
+- Image Processing: rembg
 - Package Management: uv
 - Linting: ruff
 - Containerization: Docker
