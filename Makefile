@@ -9,10 +9,8 @@ PORT = 8080
 setup:
 	@echo "Setting up environment using uv..."
 	uv venv
-	@echo "Installing dependencies..."
-	uv pip install -r requirements.txt
-	@echo "Installing development dependencies..."
-	uv pip install ruff pytest
+	@echo "Installing dependencies from pyproject.toml..."
+	uv pip install -e .
 	@echo "Setup complete!"
 
 # Run the application (local)

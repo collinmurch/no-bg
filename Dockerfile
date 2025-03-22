@@ -9,11 +9,11 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements file
-COPY requirements.txt .
+# Copy project files first for better caching
+COPY pyproject.toml ./
 
-# Install dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+# Install the project in development mode
+RUN pip install --no-cache-dir -e .
 
 # Copy application code
 COPY . .
@@ -21,6 +21,6 @@ COPY . .
 # Create necessary directories
 RUN mkdir -p uploads processed
 
-EXPOSE 5000
+EXPOSE 8080
 
 CMD ["python", "app.py"]
