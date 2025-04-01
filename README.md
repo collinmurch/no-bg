@@ -20,7 +20,7 @@ A simple web application that removes backgrounds from images using the rembg Py
 
 ## Setup and Installation
 
-4. Access the application at http://localhost:5000
+4. Access the application at http://localhost:8080
 
 ### Local Development
 
